@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dfyfbcbnrp2su" path="res://Scene/menu_principal.gd" id="1_r7x5j"]
 [ext_resource type="FontFile" uid="uid://dj0huf74s7017" path="res://Fonts/PressStart2P-Regular.ttf" id="2_ehysy"]
 [ext_resource type="Script" uid="uid://c75vv2de36sv" path="res://Scene/entrer_clignotte.gd" id="3_ehysy"]
+[ext_resource type="Script" uid="uid://ch3yvq7w40l7m" path="res://Scene/socket_jump_anim.gd" id="3_skewx"]
+[ext_resource type="Script" uid="uid://dnanvrvkywhts" path="res://Scene/etoile.gd" id="5_v0lj7"]
 
 [node name="MenuPrincipal" type="Control" unique_id=733070668]
 layout_mode = 3
@@ -36,6 +38,7 @@ grow_horizontal = 2
 theme_override_fonts/font = ExtResource("2_ehysy")
 theme_override_font_sizes/font_size = 32
 text = "Socket Jump"
+script = ExtResource("3_skewx")
 
 [node name="Boutons" type="VBoxContainer" parent="." unique_id=654020121]
 layout_mode = 1
@@ -91,6 +94,14 @@ theme_override_fonts/font = ExtResource("2_ehysy")
 theme_override_font_sizes/font_size = 12
 text = "APPUIE SUR ENTRÉE"
 script = ExtResource("3_ehysy")
+
+[node name="Etoile" type="Node2D" parent="." unique_id=1923354582]
+script = ExtResource("5_v0lj7")
+
+[node name="Curseur" type="Label" parent="." unique_id=1595739936]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
 [connection signal="pressed" from="Boutons/NouvellePartie" to="." method="nouvelle_partie_appuye"]
 [connection signal="pressed" from="Boutons/Options" to="." method="options_appuye"]
