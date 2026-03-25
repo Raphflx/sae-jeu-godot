@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://c8rpu1c1o5s0c" path="res://Asset/plug_assets/plug_assets/player/jump.png" id="9_uoijq"]
 [ext_resource type="Texture2D" uid="uid://bj6ca5e02rf10" path="res://Asset/plug_assets/plug_assets/player/dash_bas.png" id="10_nc0pe"]
 [ext_resource type="Texture2D" uid="uid://bckbew6i6a5ve" path="res://Asset/plug_assets/plug_assets/player/dash_bas_droite.png" id="11_b4udh"]
+[ext_resource type="PackedScene" uid="uid://ddqbhw8a7rsd6" path="res://Scene/MenuPause.tscn" id="17_uoijq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_porkx"]
 texture = ExtResource("1_nqagu")
@@ -761,3 +762,5 @@ polygon = PackedVector2Array(4, -4, -4, -4, -4, -12, 4, -12, 4, -16, 0, -16, 0, 
 
 [node name="Spawn" type="Marker2D" parent="." unique_id=1978468307]
 position = Vector2(-35, -7)
+
+[node name="MenuPause" parent="." unique_id=1393620256 instance=ExtResource("17_uoijq")]

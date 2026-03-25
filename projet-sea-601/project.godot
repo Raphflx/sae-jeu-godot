@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="ProjetSEA601"
-run/main_scene="uid://dtfko7hn4qpxp"
+run/main_scene="uid://bs5s7b0w2etrc"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

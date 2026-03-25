@@ -110,3 +110,13 @@ func mourir():
 	global_position = $"../Spawn".global_position
 	set_physics_process(true)
 	Mort = false
+	
+	# --- Ouverture / Fermeture Menu Pause ---
+@onready var menu_pause = $"../MenuPause"
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		if menu_pause.visible:
+			menu_pause.fermer()
+		else:
+			menu_pause.ouvrir()
