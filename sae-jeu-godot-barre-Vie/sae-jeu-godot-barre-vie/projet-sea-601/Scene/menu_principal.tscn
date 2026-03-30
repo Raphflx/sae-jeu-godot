@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://bs5s7b0w2etrc"]
+
+[ext_resource type="Script" uid="uid://dfyfbcbnrp2su" path="res://Scene/menu_principal.gd" id="1_r7x5j"]
+[ext_resource type="FontFile" uid="uid://dj0huf74s7017" path="res://Fonts/PressStart2P-Regular.ttf" id="2_ehysy"]
+[ext_resource type="Script" uid="uid://c75vv2de36sv" path="res://Scene/entrer_clignotte.gd" id="3_ehysy"]
+[ext_resource type="Script" uid="uid://ch3yvq7w40l7m" path="res://Scene/socket_jump_anim.gd" id="3_skewx"]
+[ext_resource type="Script" uid="uid://dnanvrvkywhts" path="res://Scene/etoile.gd" id="5_v0lj7"]
+
+[node name="MenuPrincipal" type="Control" unique_id=733070668]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r7x5j")
+
+[node name="FondNoir" type="ColorRect" parent="." unique_id=1498896024]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.039215688, 0.101960786, 1)
+
+[node name="Socket Jump" type="Label" parent="." unique_id=1807981024]
+modulate = Color(0.9607843, 0.77254903, 0.09411765, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -176.0
+offset_top = 100.0
+offset_right = 176.0
+offset_bottom = 132.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_ehysy")
+theme_override_font_sizes/font_size = 32
+text = "Socket Jump"
+script = ExtResource("3_skewx")
+
+[node name="Boutons" type="VBoxContainer" parent="." unique_id=654020121]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -50.5
+offset_right = 63.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="NouvellePartie" type="Button" parent="Boutons" unique_id=1496171802]
+custom_minimum_size = Vector2(260, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.9098039, 0.9411765, 1)
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_ehysy")
+text = "NOUVELLE PARTIE"
+
+[node name="Options" type="Button" parent="Boutons" unique_id=1206475637]
+custom_minimum_size = Vector2(260, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ehysy")
+text = "OPTIONS"
+
+[node name="Quitter" type="Button" parent="Boutons" unique_id=890813526]
+custom_minimum_size = Vector2(260, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ehysy")
+text = "Quitter"
+
+[node name="EntrerClignotte" type="Label" parent="." unique_id=1749588359]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -198.0
+offset_right = 110.0
+offset_bottom = -167.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_ehysy")
+theme_override_font_sizes/font_size = 12
+text = "APPUIE SUR ENTRÉE"
+script = ExtResource("3_ehysy")
+
+[node name="Etoile" type="Node2D" parent="." unique_id=1923354582]
+script = ExtResource("5_v0lj7")
+
+[node name="Curseur" type="Label" parent="." unique_id=1595739936]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="pressed" from="Boutons/NouvellePartie" to="." method="nouvelle_partie_appuye"]
+[connection signal="pressed" from="Boutons/Options" to="." method="options_appuye"]
+[connection signal="pressed" from="Boutons/Quitter" to="." method="quitter_appuye"]
