@@ -2,7 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://cjie8xe07wdxc" path="res://Asset/plug_assets/plug_assets/tileset/tileset_32px.png" id="1_nqagu"]
 [ext_resource type="Script" uid="uid://cr7kesg0l6svd" path="res://Scene/tile_map.gd" id="2_gq7oy"]
+[ext_resource type="Script" uid="uid://d4cs730axva1a" path="res://Scene/zone_recharge.gd" id="3_dqg37"]
 [ext_resource type="Script" uid="uid://c57om5mnl7jq7" path="res://Scene/character_body_2d.gd" id="3_wh4ry"]
+[ext_resource type="Texture2D" uid="uid://7s674ni5wheu" path="res://Scene/Capture d’écran 2026-03-30 110941.png" id="4_8cain"]
 [ext_resource type="Texture2D" uid="uid://bwkb5e6v0ym50" path="res://Asset/plug_assets/plug_assets/player/fall.png" id="4_sy8ct"]
 [ext_resource type="Texture2D" uid="uid://dfcemom0je424" path="res://Asset/plug_assets/plug_assets/player/dash_haut_droite.png" id="5_k1etc"]
 [ext_resource type="Texture2D" uid="uid://ddnw00oiwyoh7" path="res://Asset/plug_assets/plug_assets/player/walk_f1.png" id="5_ncqvi"]
@@ -17,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://bj6ca5e02rf10" path="res://Asset/plug_assets/plug_assets/player/dash_bas.png" id="10_nc0pe"]
 [ext_resource type="Texture2D" uid="uid://bckbew6i6a5ve" path="res://Asset/plug_assets/plug_assets/player/dash_bas_droite.png" id="11_b4udh"]
 [ext_resource type="PackedScene" uid="uid://ddqbhw8a7rsd6" path="res://Scene/MenuPause.tscn" id="17_uoijq"]
+[ext_resource type="Script" uid="uid://dh8jg2c1sj5aq" path="res://Scene/progress_bar.gd" id="19_k1etc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_porkx"]
 texture = ExtResource("1_nqagu")
@@ -618,6 +621,9 @@ custom_data_layer_0/name = "mortel"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_porkx")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uoijq"]
+size = Vector2(52, 52)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_8r58n"]
 animations = [{
 "frames": [{
@@ -741,8 +747,20 @@ layer_0/tile_data = PackedInt32Array(131065, 0, 1, 131066, 0, 1, 131067, 0, 1, 1
 script = ExtResource("2_gq7oy")
 metadata/Mortel = true
 
+[node name="ZoneRecharge" type="Area2D" parent="TileMap" unique_id=789168971]
+position = Vector2(-254, -6)
+script = ExtResource("3_dqg37")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/ZoneRecharge" unique_id=1649453464]
+position = Vector2(56, 11)
+shape = SubResource("RectangleShape2D_uoijq")
+
+[node name="Sprite2D" type="Sprite2D" parent="TileMap/ZoneRecharge" unique_id=2125388870]
+position = Vector2(53, 10)
+texture = ExtResource("4_8cain")
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=516775947]
-position = Vector2(-1, 4)
+position = Vector2(175, -28)
 script = ExtResource("3_wh4ry")
 SPEED = 700.0
 JUMP_VELOCITY = -700.0
@@ -760,7 +778,14 @@ polygon = PackedVector2Array(4, -4, -4, -4, -4, -12, 4, -12, 4, -16, 0, -16, 0, 
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=977615137]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="CharacterBody2D" unique_id=670470376]
+
+[node name="ProgressBar" type="ProgressBar" parent="CharacterBody2D/CanvasLayer" unique_id=995452394]
+offset_right = 4.0
+offset_bottom = 27.0
+script = ExtResource("19_k1etc")
+
 [node name="Spawn" type="Marker2D" parent="." unique_id=1978468307]
-position = Vector2(-35, -7)
+position = Vector2(-4, -2)
 
 [node name="MenuPause" parent="." unique_id=1393620256 instance=ExtResource("17_uoijq")]
