@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://i0o3kvxpcm8s"]
+
+[ext_resource type="FontFile" uid="uid://dj0huf74s7017" path="res://Fonts/PressStart2P-Regular.ttf" id="1_75yxp"]
+
+[node name="SelectionNiveau" type="Control" unique_id=2118373153]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChoisirNiveau" type="Label" parent="." unique_id=1346976948]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1307130218]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.039215688, 0.101960786, 1)
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1025826356]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="ContainerLvl1" type="VBoxContainer" parent="GridContainer" unique_id=2127216178]
+layout_mode = 2
+
+[node name="Niveau1" type="Button" parent="GridContainer/ContainerLvl1" unique_id=1203917787]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("1_75yxp")
+theme_override_font_sizes/font_size = 24
+text = "NIVEAU 1"
+
+[node name="ImgLvl1" type="TextureRect" parent="GridContainer/ContainerLvl1" unique_id=1071133201]
+layout_mode = 2
+
+[node name="ContainerLvl2" type="VBoxContainer" parent="GridContainer" unique_id=1489520335]
+layout_mode = 2
+
+[node name="ImgLvl2" type="Button" parent="GridContainer/ContainerLvl2" unique_id=1564348174]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("1_75yxp")
+theme_override_font_sizes/font_size = 24
+text = "NIVEAU 2"
+
+[node name="TextureRect" type="TextureRect" parent="GridContainer/ContainerLvl2" unique_id=696181343]
+layout_mode = 2
+
+[node name="ContainerLvl3" type="VBoxContainer" parent="GridContainer" unique_id=815556425]
+layout_mode = 2
+
+[node name="Niveau3" type="Button" parent="GridContainer/ContainerLvl3" unique_id=1300418506]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("1_75yxp")
+theme_override_font_sizes/font_size = 24
+text = "NIVEAU 3"
+
+[node name="ImgLvl3" type="TextureRect" parent="GridContainer/ContainerLvl3" unique_id=22128836]
+layout_mode = 2

@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://c75vv2de36sv" path="res://Scene/entrer_clignotte.gd" id="3_ehysy"]
 [ext_resource type="Script" uid="uid://ch3yvq7w40l7m" path="res://Scene/socket_jump_anim.gd" id="3_skewx"]
 [ext_resource type="Script" uid="uid://dnanvrvkywhts" path="res://Scene/etoile.gd" id="5_v0lj7"]
+[ext_resource type="AudioStream" uid="uid://bv8pmuk8cx540" path="res://Asset/Sounds/son_survol.wav" id="6_dsr7u"]
 
 [node name="MenuPrincipal" type="Control" unique_id=733070668]
 layout_mode = 3
@@ -67,12 +68,16 @@ text = "NOUVELLE PARTIE"
 [node name="Options" type="Button" parent="Boutons" unique_id=1206475637]
 custom_minimum_size = Vector2(260, 40)
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
 theme_override_fonts/font = ExtResource("2_ehysy")
 text = "OPTIONS"
 
 [node name="Quitter" type="Button" parent="Boutons" unique_id=890813526]
 custom_minimum_size = Vector2(260, 40)
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
 theme_override_fonts/font = ExtResource("2_ehysy")
 text = "Quitter"
 
@@ -102,7 +107,14 @@ script = ExtResource("5_v0lj7")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+text = "►"
 
+[node name="SonSurvol" type="AudioStreamPlayer2D" parent="." unique_id=1702269721]
+stream = ExtResource("6_dsr7u")
+
+[connection signal="mouse_entered" from="Boutons/NouvellePartie" to="." method="survol_nouvelle_partie"]
 [connection signal="pressed" from="Boutons/NouvellePartie" to="." method="nouvelle_partie_appuye"]
+[connection signal="mouse_entered" from="Boutons/Options" to="." method="survol_options"]
 [connection signal="pressed" from="Boutons/Options" to="." method="options_appuye"]
+[connection signal="mouse_entered" from="Boutons/Quitter" to="." method="survol_quitter"]
 [connection signal="pressed" from="Boutons/Quitter" to="." method="quitter_appuye"]
