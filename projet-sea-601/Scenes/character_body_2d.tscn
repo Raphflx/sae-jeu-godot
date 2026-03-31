@@ -148,10 +148,10 @@ metadata/_edit_group_ = true
 position = Vector2(-25.5, 62)
 scale = Vector2(0.3375, 0.22500001)
 sprite_frames = SubResource("SpriteFrames_8r58n")
-animation = &"Mort"
+animation = &"Idle"
 
 [node name="March_F1" type="CollisionPolygon2D" parent="." unique_id=1213325289]
-polygon = PackedVector2Array(-32, 44, -19, 44, -19, 50, -17, 50, -17, 62, -19, 62, -19, 76, -35, 76, -35, 62, -34, 62, -34, 49, -32, 49)
+polygon = PackedVector2Array(-34, 44, -17, 44, -17, 75, -34, 75)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1815824717]
 position = Vector2(-27, 26)

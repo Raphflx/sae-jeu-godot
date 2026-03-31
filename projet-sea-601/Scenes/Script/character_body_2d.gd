@@ -38,6 +38,23 @@ func _ready():
 	else:
 		print("NOEUD INTROUVABLE - chemin incorrect !")
 
+func check_tile_mortelle():
+	var tilemap = get_tree().get_first_node_in_group("tilemap")
+	if not tilemap: return
+
+	var check_points = [
+		global_position + Vector2(0, -300),   # sommet tête
+		global_position + Vector2(-6, -18),  # haut-gauche
+		global_position + Vector2(6, -14),   # haut-droite
+	]
+
+	for point in check_points:
+		var tile_pos = tilemap.local_to_map(tilemap.to_local(point))
+		var tile_data = tilemap.get_cell_tile_data(2, tile_pos)
+		if tile_data and tile_data.get_custom_data("mortel"):
+			mourir()
+			return
+
 func _physics_process(delta: float) -> void:
 
 	# ── UI ÉNERGIE ───────────────────────────────────────
@@ -119,7 +136,7 @@ func _physics_process(delta: float) -> void:
 			var tile_data = collider.get_cell_tile_data(2, tile_pos)
 			if tile_data and tile_data.get_custom_data("mortel"):
 				mourir()
-
+	check_tile_mortelle()
 	
 	# ── Animations ─────────────────────────────────────────
 	if en_dash:
