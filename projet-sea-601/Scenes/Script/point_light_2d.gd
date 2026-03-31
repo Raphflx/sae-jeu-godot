@@ -17,4 +17,3 @@ func _ready():
 	
 	var tex = ImageTexture.create_from_image(image)
 	texture = tex
-	texture_scale = 2.55

@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 GameManager="*uid://dbc8tuahhhq34"
 
+[display]
+
+window/size/mode=2
+window/stretch/mode="canvas_items"
+
 [input]
 
 Gauche={

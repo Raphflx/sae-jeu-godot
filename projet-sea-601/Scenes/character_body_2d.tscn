@@ -182,4 +182,5 @@ color = Color(1.3704424, 1.1849931, 0.8670802, 1)
 energy = 1.5
 blend_mode = 2
 texture = SubResource("GradientTexture2D_8f6q8")
+texture_scale = 0.65
 script = ExtResource("20_glyrq")
