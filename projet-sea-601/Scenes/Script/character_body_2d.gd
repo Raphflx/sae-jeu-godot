@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var energie_max : float = 100.0
 @export var energie : float = 100.0
 @export var perte_energie_par_seconde : float = 5.0
+@export var drain_energie_lampe : float  = 10
 @export var recharge_par_seconde : float = 20.0
 
 # ── MOUVEMENT ───────────────────────────────────────────
@@ -15,6 +16,10 @@ extends CharacterBody2D
 @onready var barre_energie = $"CanvasLayer/ProgressBar"
 @onready var menu_pause = $"../MenuPause"
 
+# Taille de la lampe
+@export var taille_lampe_normale = 0.65 
+@export var taille_lampe_boostee = 2
+@onready var light = $PointLight2D
 # ── VARIABLES ───────────────────────────────────────────
 
 var en_recharge = false
@@ -24,6 +29,8 @@ var vitesse_dash = 0.0
 var direction_dash = Vector2.ZERO
 var etat_air = false
 var Mort = false
+var dans_zone_sombre = false
+var lampe_activee = false
 
 # ── INITIALISATION ──────────────────────────────────────
 func _ready():
@@ -61,6 +68,21 @@ func _physics_process(delta: float) -> void:
 
 	if energie <= 0 and not Mort:
 		mourir()
+		
+# Gestion touche E — seulement dans la zone sombre
+	if dans_zone_sombre:
+		if Input.is_action_just_pressed("interaction"):
+			lampe_activee = !lampe_activee  # toggle ON/OFF
+			if lampe_activee:
+				light.texture_scale = taille_lampe_boostee
+			else:
+				light.texture_scale = taille_lampe_normale
+
+	# Drain d'énergie
+	if dans_zone_sombre and lampe_activee:
+		energie -= drain_energie_lampe * delta
+
+		
 	# ── Récupère le dash quand on touche le sol ────────────
 	if is_on_floor():
 		peut_dasher = true
