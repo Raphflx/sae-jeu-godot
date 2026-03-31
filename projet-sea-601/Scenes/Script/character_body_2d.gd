@@ -116,7 +116,7 @@ func _physics_process(delta: float) -> void:
 		var collider = collision.get_collider()
 		if collider is TileMap:
 			var tile_pos = collider.local_to_map(collision.get_position())
-			var tile_data = collider.get_cell_tile_data(0, tile_pos)
+			var tile_data = collider.get_cell_tile_data(2, tile_pos)
 			if tile_data and tile_data.get_custom_data("mortel"):
 				mourir()
 
@@ -159,6 +159,7 @@ func mourir():
 	if spawn:
 		global_position = spawn.global_position
 	set_physics_process(true)
+	energie = 100
 	Mort = false
 	
 # ── RECHARGE ───────────────────────────────────────────

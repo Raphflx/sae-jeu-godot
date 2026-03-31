@@ -16,9 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://pc2w5c7broyd" path="res://Asset/player/Player_2/player/walk_f2.png" id="13_t0q15"]
 [ext_resource type="Texture2D" uid="uid://p6v7ham0rt1x" path="res://Asset/player/Player_2/player/walk_f3.png" id="14_f7qs7"]
 [ext_resource type="Texture2D" uid="uid://bq5dd7of0fxpy" path="res://Asset/player/Player_2/player/walk_f4.png" id="15_5dvi5"]
-[ext_resource type="Texture2D" uid="uid://cw28pbinrh0en" path="res://Asset/player/Player_2/player/death_f0.png" id="17_8f6q8"]
 [ext_resource type="Texture2D" uid="uid://5bn4306y4qpp" path="res://Asset/player/Player_2/player/jump.png" id="17_44djj"]
-[ext_resource type="Texture2D" uid="uid://dpgaodsflukor" path="res://Asset/player/Player_2/player/death_f1.png" id="18_2sln1"]
 [ext_resource type="Texture2D" uid="uid://b2ldxwejysopy" path="res://Asset/player/Player_2/player/death_f2.png" id="19_hay6s"]
 [ext_resource type="Script" uid="uid://dh8jg2c1sj5aq" path="res://Scenes/Script/progress_bar.gd" id="21_8f6q8"]
 
@@ -126,12 +124,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("17_8f6q8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_2sln1")
-}, {
-"duration": 1.0,
 "texture": ExtResource("19_hay6s")
 }],
 "loop": true,
@@ -148,6 +140,7 @@ animations = [{
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=247728084]
+position = Vector2(23, -12)
 script = ExtResource("1_mv6xa")
 metadata/_edit_group_ = true
 
@@ -161,7 +154,9 @@ animation = &"Mort"
 polygon = PackedVector2Array(-32, 44, -19, 44, -19, 50, -17, 50, -17, 62, -19, 62, -19, 76, -35, 76, -35, 62, -34, 62, -34, 49, -32, 49)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1815824717]
-zoom = Vector2(3, 3)
+position = Vector2(-27, 26)
+zoom = Vector2(2, 2)
+limit_enabled = false
 position_smoothing_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=605402941]
