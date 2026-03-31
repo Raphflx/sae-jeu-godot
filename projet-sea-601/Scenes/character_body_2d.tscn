@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bq5dd7of0fxpy" path="res://Asset/player/Player_2/player/walk_f4.png" id="15_5dvi5"]
 [ext_resource type="Texture2D" uid="uid://5bn4306y4qpp" path="res://Asset/player/Player_2/player/jump.png" id="17_44djj"]
 [ext_resource type="Texture2D" uid="uid://b2ldxwejysopy" path="res://Asset/player/Player_2/player/death_f2.png" id="19_hay6s"]
+[ext_resource type="Script" uid="uid://bj8lpohof4qlw" path="res://Scenes/point_light_2d.gd" id="20_glyrq"]
 [ext_resource type="Script" uid="uid://dh8jg2c1sj5aq" path="res://Scenes/Script/progress_bar.gd" id="21_8f6q8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8r58n"]
@@ -139,9 +140,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_8f6q8"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2sln1"]
+gradient = SubResource("Gradient_8f6q8")
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=247728084]
-position = Vector2(23, -12)
+position = Vector2(37, -3)
 script = ExtResource("1_mv6xa")
+SPEED = 300.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=61062522]
@@ -165,3 +172,11 @@ position_smoothing_enabled = true
 offset_right = 4.0
 offset_bottom = 27.0
 script = ExtResource("21_8f6q8")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1689725335]
+position = Vector2(-25, 57)
+color = Color(255, 240, 200, 1)
+energy = 1.5
+texture = SubResource("GradientTexture2D_2sln1")
+texture_scale = 2.55
+script = ExtResource("20_glyrq")

@@ -38,23 +38,6 @@ func _ready():
 	else:
 		print("NOEUD INTROUVABLE - chemin incorrect !")
 
-func check_tile_mortelle():
-	var tilemap = get_tree().get_first_node_in_group("tilemap")
-	if not tilemap: return
-
-	var check_points = [
-		global_position + Vector2(0, -300),   # sommet tête
-		global_position + Vector2(-6, -18),  # haut-gauche
-		global_position + Vector2(6, -14),   # haut-droite
-	]
-
-	for point in check_points:
-		var tile_pos = tilemap.local_to_map(tilemap.to_local(point))
-		var tile_data = tilemap.get_cell_tile_data(2, tile_pos)
-		if tile_data and tile_data.get_custom_data("mortel"):
-			mourir()
-			return
-
 func _physics_process(delta: float) -> void:
 
 	# ── UI ÉNERGIE ───────────────────────────────────────
@@ -127,16 +110,24 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	# ── Détection des tiles mortelles ─────────────────────
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		if collider is TileMap:
+			# Vérifie la tile normale (ton code existant)
 			var tile_pos = collider.local_to_map(collision.get_position())
 			var tile_data = collider.get_cell_tile_data(2, tile_pos)
 			if tile_data and tile_data.get_custom_data("mortel"):
 				mourir()
-	check_tile_mortelle()
+			
+			# Vérifie aussi la tile juste au dessus avec la normale
+			var normal = collision.get_normal()
+			if normal.y > 0.5:  # collision venant du haut
+				var pos_haut = collision.get_position() + Vector2(0, -8)
+				var tile_pos_haut = collider.local_to_map(collider.to_local(pos_haut))
+				var tile_data_haut = collider.get_cell_tile_data(2, tile_pos_haut)
+				if tile_data_haut and tile_data_haut.get_custom_data("mortel"):
+					mourir()
 	
 	# ── Animations ─────────────────────────────────────────
 	if en_dash:
