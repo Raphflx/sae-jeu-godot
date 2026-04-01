@@ -1,0 +1,47 @@
+extends Control
+
+@onready var label_blink = $EntrerClignotte  #label APPUIE SUR ENTRÉE
+@onready var curseur = $Curseur  
+# liste des boutons du menu dans l'ordre
+@onready var boutons = [$Boutons/NouvellePartie, $Boutons/Options, $Boutons/Quitter]
+var index = 0  # position actuelle du curseur (0 = premier bouton)
+
+# Called when the node enters the scene tree for the first time.
+
+func _ready():
+	_mettre_a_jour_curseur()
+	
+func nouvelle_partie_appuye():
+	get_tree().change_scene_to_file("res://Scenes/niveau_1.tscn")
+
+func options_appuye():
+	pass  # plus tard
+
+func quitter_appuye():
+	get_tree().quit()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+
+func _input(event):
+	# Descend avec flèche bas
+	if event.is_action_pressed("ui_down"):
+		index = (index + 1) % boutons.size()  # revient au début si on dépasse le dernier
+		_mettre_a_jour_curseur()
+	# Monte avec flèche haut
+	if event.is_action_pressed("ui_up"):
+		index = (index - 1 + boutons.size()) % boutons.size()  # revient à la fin si on dépasse le premier
+		_mettre_a_jour_curseur()
+	# Confirme avec entrée
+	if event.is_action_pressed("ui_accept"):
+		boutons[index].emit_signal("pressed")
+
+func _mettre_a_jour_curseur():
+	# Récupère le bouton actuellement sélectionné
+	var btn = boutons[index]
+	# Positionne le curseur à gauche du bouton, centré verticalement
+	curseur.global_position = Vector2(
+		btn.global_position.x - 30,       
+		btn.global_position.y + btn.size.y / 2 - curseur.size.y / 2  # centré en hauteur
+	)
