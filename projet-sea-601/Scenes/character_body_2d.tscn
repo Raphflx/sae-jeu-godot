@@ -152,6 +152,7 @@ fill_to = Vector2(1, 1)
 position = Vector2(37, -3)
 script = ExtResource("1_mv6xa")
 SPEED = 300.0
+DASH_SPEED = 1000.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=61062522]
@@ -161,7 +162,7 @@ sprite_frames = SubResource("SpriteFrames_8r58n")
 animation = &"Idle"
 
 [node name="March_F1" type="CollisionPolygon2D" parent="." unique_id=1213325289]
-polygon = PackedVector2Array(-34, 44, -17, 44, -17, 75, -34, 75)
+polygon = PackedVector2Array(-34, 49, -17, 49, -17, 75, -34, 75)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1815824717]
 position = Vector2(-27, 26)

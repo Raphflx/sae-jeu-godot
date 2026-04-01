@@ -1,23 +1,70 @@
 extends CanvasLayer
 
+
+var boutons = []
+var index = 0
+
 func _ready():
 	hide()
+	boutons = [
+		$Bouttons/Reprendre,
+		$Bouttons/Recommencer,
+		$Bouttons/MenuPrincipal
+	]
+	for btn in boutons:
+		btn.focus_mode = Control.FOCUS_NONE
+	print(boutons)
+
 
 func ouvrir():
 	show()
 	get_tree().paused = true
+	index = 0
+	_mettre_a_jour_selection()
+
 
 func fermer():
 	hide()
 	get_tree().paused = false
 
-func reprendre_appuye():
+func _input(event):
+	# Ignore les inputs si le menu est caché
+	if not visible:
+		return
+	# Descend avec flèche bas
+	if event.is_action_pressed("ui_down"):
+		index = (index + 1) % boutons.size()
+		_mettre_a_jour_selection()
+	# Monte avec flèche haut
+	if event.is_action_pressed("ui_up"):
+		index = (index - 1 + boutons.size()) % boutons.size()
+		_mettre_a_jour_selection()
+	# Confirme avec entrée
+	if event.is_action_pressed("ui_accept"):
+		boutons[index].emit_signal("pressed")
+
+func _mettre_a_jour_selection():
+	# Couleur selon le bouton sélectionné
+	for i in boutons.size():
+		if i == index:
+			if i == 2:
+				# Rouge foncé pour "Menu Principal"
+				boutons[i].add_theme_color_override("font_color", Color("#e84040"))
+			else:
+				# Jaune pour "Reprendre" et "Recommencer"
+				boutons[i].add_theme_color_override("font_color", Color("#f5c518"))
+		else:
+			# Blanc pour les boutons non sélectionnés
+			boutons[i].add_theme_color_override("font_color", Color("#e8e8f0"))
+			
+func reprendre_appuye() -> void:
 	fermer()
 
-func recommencer_appuye():
+func recommencer_appuye() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-func menu_principal_appuye():
+func menu_principal_appuye() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://Scene/menu_principal.tscn")
+	get_tree().change_scene_to_file("res://Scenes/menu_principal.tscn")
+	

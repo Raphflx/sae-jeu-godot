@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var energie : float = 100.0
 @export var perte_energie_par_seconde : float = 5.0
 @export var drain_energie_lampe : float  = 10
-@export var recharge_par_seconde : float = 20.0
+@export var recharge_par_seconde : float = 40.0
 
 # ── MOUVEMENT ───────────────────────────────────────────
 @export var SPEED = 400.0
@@ -31,6 +31,7 @@ var etat_air = false
 var Mort = false
 var dans_zone_sombre = false
 var lampe_activee = false
+var derniere_direction = Vector2(1, 0)
 
 # ── INITIALISATION ──────────────────────────────────────
 func _ready():
@@ -95,9 +96,16 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * GRAVITE_MULT * delta
 
 	# ── Saut ───────────────────────────────────────────────
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("sauter") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+	# ── Lire la direction du joueur ────────────────────────
+	var dir = Vector2(
+		Input.get_axis("Gauche", "Droite"),
+		Input.get_axis("haut",   "Bas")
+	)
 
+	if dir.length() > 0.2:
+		derniere_direction = dir.normalized()
 	# ── Déplacement normal (désactivé pendant le dash) ─────
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if not en_dash:
@@ -107,23 +115,31 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	# ── Déclenchement du dash ──────────────────────────────
-	var dir = Vector2(
-		Input.get_axis("ui_left", "ui_right"),
-		Input.get_axis("ui_up",   "ui_down")
-	)
-
 	if Input.is_action_just_pressed("dash") and peut_dasher:
+		var dash_dir : Vector2
+		if dir.length() > 0.2:
+			# Si l'axe vertical est dominant, on ignore le x pour éviter les drifts
+			if abs(dir.y) > abs(dir.x) * 1.5:
+				dash_dir = Vector2(0, sign(dir.y))
+			# Si l'axe horizontal est dominant
+			elif abs(dir.x) > abs(dir.y) * 1.5:
+				dash_dir = Vector2(sign(dir.x), 0)
+			# Sinon dash diagonal normalisé
+			else:
+				dash_dir = dir.normalized()
+		else:
+			dash_dir = derniere_direction
 
-		direction_dash = dir.normalized()
+		direction_dash = dash_dir
 		peut_dasher = false
 		en_dash = true
 		jouer_animation_dash(direction_dash)
 		vitesse_dash = DASH_SPEED
+		velocity.y = 0.0
 
 		var tween = create_tween()
-		tween.tween_property(self, "vitesse_dash", 0.5, 0.3)
+		tween.tween_property(self, "vitesse_dash", 0.0, 0.25)
 		tween.tween_callback(func(): en_dash = false)
-
 	# ── Applique vélocité dash ─────────────────────────────
 	if en_dash:
 		velocity.x = direction_dash.x * vitesse_dash
@@ -201,7 +217,7 @@ func arreter_recharge():
 
 # ── MENU PAUSE ─────────────────────────────────────────
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("pause"):
 		if menu_pause.visible:
 			menu_pause.fermer()
 		else:
