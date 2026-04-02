@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://bjuhiyu8jvpbm"]
+
+[ext_resource type="Script" uid="uid://trimnf5u67br" path="res://Scenes/Script/menu_options.gd" id="1_vs701"]
+[ext_resource type="FontFile" uid="uid://dj0huf74s7017" path="res://Fonts/PressStart2P-Regular.ttf" id="2_03g0r"]
+[ext_resource type="Script" uid="uid://dnanvrvkywhts" path="res://Scenes/Script/etoile.gd" id="3_vxuch"]
+
+[node name="MenuOptions" type="Control" unique_id=1546866370]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vs701")
+
+[node name="FondNoir" type="ColorRect" parent="." unique_id=1454640821]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.039215688, 0.101960786, 1)
+
+[node name="Conteneur" type="VBoxContainer" parent="." unique_id=596993449]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.5
+offset_top = -135.5
+offset_right = 66.5
+offset_bottom = 135.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Options" type="Label" parent="Conteneur" unique_id=1718600450]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_03g0r")
+theme_override_font_sizes/font_size = 32
+text = "OPTIONS"
+
+[node name="Separator" type="HSeparator" parent="Conteneur" unique_id=1690803007]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VolumeMusique" type="HBoxContainer" parent="Conteneur" unique_id=1942332682]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Musique" type="Label" parent="Conteneur/VolumeMusique" unique_id=614438269]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_03g0r")
+text = "MUSIQUE"
+
+[node name="SonMusique" type="HSlider" parent="Conteneur/VolumeMusique" unique_id=1029257431]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VolumeEffets" type="HBoxContainer" parent="Conteneur" unique_id=958151039]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Effets" type="Label" parent="Conteneur/VolumeEffets" unique_id=1465652879]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_03g0r")
+text = "EFFETS"
+
+[node name="SonEffets" type="HSlider" parent="Conteneur/VolumeEffets" unique_id=240193323]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Separator2" type="HSeparator" parent="Conteneur" unique_id=92832832]
+layout_mode = 2
+
+[node name="Touches" type="Label" parent="Conteneur" unique_id=700999244]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_03g0r")
+theme_override_font_sizes/font_size = 32
+text = "TOUCHES :"
+
+[node name="PanelTouches" type="PanelContainer" parent="Conteneur" unique_id=606872977]
+layout_mode = 2
+
+[node name="ConteneurTouches" type="VBoxContainer" parent="Conteneur/PanelTouches" unique_id=1546132834]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Sauter" type="Label" parent="Conteneur/PanelTouches/ConteneurTouches" unique_id=707750386]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_03g0r")
+text = "SAUTER :  \"Espace\""
+
+[node name="Dash" type="Label" parent="Conteneur/PanelTouches/ConteneurTouches" unique_id=1530238070]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_03g0r")
+text = "DASH : \" A \""
+
+[node name="Deplacemment" type="Label" parent="Conteneur/PanelTouches/ConteneurTouches" unique_id=89134648]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_03g0r")
+text = "SE DÉPLACER : \" ← → \""
+
+[node name="DirectionDash" type="Label" parent="Conteneur/PanelTouches/ConteneurTouches" unique_id=64323626]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_03g0r")
+text = "DIRECTION DASH \" ↑ ↓ ← → \""
+
+[node name="Separator3" type="HSeparator" parent="Conteneur" unique_id=241048073]
+layout_mode = 2
+
+[node name="BoutonRetour" type="Button" parent="Conteneur" unique_id=1920696385]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_03g0r")
+theme_override_font_sizes/font_size = 24
+text = "RETOUR"
+
+[node name="Etoile" type="Node2D" parent="." unique_id=705275815]
+script = ExtResource("3_vxuch")
+
+[connection signal="value_changed" from="Conteneur/VolumeMusique/SonMusique" to="." method="son_musique_value_changed"]
+[connection signal="value_changed" from="Conteneur/VolumeEffets/SonEffets" to="." method="son_effets_value_changed"]
+[connection signal="pressed" from="Conteneur/BoutonRetour" to="." method="bouton_retour_pressed"]

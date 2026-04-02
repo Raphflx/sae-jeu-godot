@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://mikq5gh7uryg"]
+
+[ext_resource type="Script" uid="uid://vekn2nayngx7" path="res://Scenes/Script/selection_niveau.gd" id="1_cemym"]
+[ext_resource type="FontFile" uid="uid://dj0huf74s7017" path="res://Fonts/PressStart2P-Regular.ttf" id="2_eur6p"]
+[ext_resource type="AudioStream" uid="uid://bv8pmuk8cx540" path="res://Asset/Sounds/son_survol.wav" id="2_ex0q7"]
+[ext_resource type="Texture2D" uid="uid://dtv4o1n7isy16" path="res://Asset/Images/_3268654.JPG" id="3_eur6p"]
+[ext_resource type="Script" uid="uid://dnanvrvkywhts" path="res://Scenes/Script/etoile.gd" id="5_feqww"]
+
+[node name="SelectionNiveau" type="Control" unique_id=746037620]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cemym")
+
+[node name="SonSurvol" type="AudioStreamPlayer2D" parent="." unique_id=376406415]
+stream = ExtResource("2_ex0q7")
+
+[node name="FondNoir" type="ColorRect" parent="." unique_id=2040666830]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.039215688, 0.039215688, 0.101960786, 1)
+
+[node name="Conteneur" type="VBoxContainer" parent="." unique_id=1033420666]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -272.0
+offset_top = -32.0
+offset_right = 272.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="ChoisirNiveau" type="Label" parent="Conteneur" unique_id=1675095238]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_eur6p")
+theme_override_font_sizes/font_size = 32
+text = "CHOISIR UN NIVEAU"
+
+[node name="ConteneurNiveau" type="GridContainer" parent="Conteneur" unique_id=565829843]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 5
+
+[node name="ContLvl1" type="VBoxContainer" parent="Conteneur/ConteneurNiveau" unique_id=1842386722]
+layout_mode = 2
+
+[node name="ImageLvl1" type="TextureRect" parent="Conteneur/ConteneurNiveau/ContLvl1" unique_id=1928292256]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+texture = ExtResource("3_eur6p")
+expand_mode = 5
+
+[node name="BtnLvl1" type="Button" parent="Conteneur/ConteneurNiveau/ContLvl1" unique_id=2121999800]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_focus_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_eur6p")
+text = "NIVEAU 1"
+
+[node name="ContLvl2" type="VBoxContainer" parent="Conteneur/ConteneurNiveau" unique_id=210777986]
+layout_mode = 2
+
+[node name="ImageLvl2" type="TextureRect" parent="Conteneur/ConteneurNiveau/ContLvl2" unique_id=1002829133]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+texture = ExtResource("3_eur6p")
+expand_mode = 5
+
+[node name="BtnLvl2" type="Button" parent="Conteneur/ConteneurNiveau/ContLvl2" unique_id=273310256]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_focus_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_eur6p")
+text = "NIVEAU 2"
+
+[node name="ContLvl3" type="VBoxContainer" parent="Conteneur/ConteneurNiveau" unique_id=1938618503]
+layout_mode = 2
+
+[node name="ImageLvl3" type="TextureRect" parent="Conteneur/ConteneurNiveau/ContLvl3" unique_id=246543913]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+texture = ExtResource("3_eur6p")
+expand_mode = 5
+
+[node name="BtnLvl3" type="Button" parent="Conteneur/ConteneurNiveau/ContLvl3" unique_id=90613080]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_focus_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_eur6p")
+text = "NIVEAU 3"
+
+[node name="ContLvl4" type="VBoxContainer" parent="Conteneur/ConteneurNiveau" unique_id=1716219852]
+layout_mode = 2
+
+[node name="ImageLvl4" type="TextureRect" parent="Conteneur/ConteneurNiveau/ContLvl4" unique_id=1230259297]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+texture = ExtResource("3_eur6p")
+expand_mode = 5
+
+[node name="BtnLvl4" type="Button" parent="Conteneur/ConteneurNiveau/ContLvl4" unique_id=288852615]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_focus_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_eur6p")
+text = "NIVEAU 4"
+
+[node name="ContLvl5" type="VBoxContainer" parent="Conteneur/ConteneurNiveau" unique_id=434318700]
+layout_mode = 2
+
+[node name="ImageLvl5" type="TextureRect" parent="Conteneur/ConteneurNiveau/ContLvl5" unique_id=1508876428]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+texture = ExtResource("3_eur6p")
+expand_mode = 5
+
+[node name="BtnLvl5" type="Button" parent="Conteneur/ConteneurNiveau/ContLvl5" unique_id=726479799]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_focus_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9607843, 0.77254903, 0.09411765, 1)
+theme_override_fonts/font = ExtResource("2_eur6p")
+text = "NIVEAU 5"
+
+[node name="Etoile" type="Node2D" parent="." unique_id=808909139]
+script = ExtResource("5_feqww")
+
+[connection signal="pressed" from="Conteneur/ConteneurNiveau/ContLvl1/BtnLvl1" to="." method="btn_lvl1_pressed"]
+[connection signal="pressed" from="Conteneur/ConteneurNiveau/ContLvl2/BtnLvl2" to="." method="btn_lvl_2_pressed"]
+[connection signal="pressed" from="Conteneur/ConteneurNiveau/ContLvl3/BtnLvl3" to="." method="btn_lvl3_pressed"]
+[connection signal="pressed" from="Conteneur/ConteneurNiveau/ContLvl4/BtnLvl4" to="." method="btn_lvl4_pressed"]
+[connection signal="pressed" from="Conteneur/ConteneurNiveau/ContLvl5/BtnLvl5" to="." method="btn_lvl5_pressed"]

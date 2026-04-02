@@ -1,0 +1,217 @@
+extends CharacterBody2D
+# ── ÉNERGIE ─────────────────────────────────────────────
+@export var energie_max : float = 100.0
+@export var energie : float = 100.0
+@export var perte_energie_par_seconde : float = 5.0
+@export var drain_energie_lampe : float  = 10
+@export var recharge_par_seconde : float = 40.0
+
+# ── MOUVEMENT ───────────────────────────────────────────
+@export var SPEED = 400.0
+@export var JUMP_VELOCITY = -500.0
+@export var DASH_SPEED = 900.0
+@export var GRAVITE_MULT : float = 1.5
+
+# ── UI ──────────────────────────────────────────────────
+@onready var barre_energie = $"CanvasLayer/ProgressBar"
+@onready var menu_pause = $"../MenuPause"
+
+# Taille de la lampe
+@export var taille_lampe_normale = 0.65 
+@export var taille_lampe_boostee = 2
+@onready var light = $PointLight2D
+
+# ── VARIABLES ───────────────────────────────────────────
+var en_recharge = false
+var peut_dasher = true
+var en_dash = false
+var vitesse_dash = 0.0
+var direction_dash = Vector2.ZERO
+var etat_air = false
+var Mort = false
+var dans_zone_sombre = false
+var lampe_activee = false
+var derniere_direction = Vector2(1, 0)
+
+# ── INITIALISATION ──────────────────────────────────────
+func _ready():
+	energie = energie_max
+	print("=== DEBUG BARRE ===")
+	print("barre_energie : ", barre_energie)
+	if barre_energie:
+		print("Position : ", barre_energie.global_position)
+		print("Size : ", barre_energie.size)
+		print("Visible : ", barre_energie.visible)
+		print("Value : ", barre_energie.value)
+	else:
+		print("NOEUD INTROUVABLE - chemin incorrect !")
+
+func _physics_process(delta: float) -> void:
+	# ── UI ÉNERGIE ───────────────────────────────────────
+	if barre_energie:
+		barre_energie.value = energie
+		barre_energie.max_value = energie_max
+		if energie < 20:
+			barre_energie.modulate = Color(1, 0.3, 0.3)
+		else:
+			barre_energie.modulate = Color(1, 1, 1)
+
+	# ── Gestion énergie ──────────────────────────────────
+	if not en_recharge:
+		energie -= perte_energie_par_seconde * delta
+	else:
+		energie += recharge_par_seconde * delta
+
+	energie = clamp(energie, 0, energie_max)
+
+	if energie <= 0 and not Mort:
+		mourir()
+
+	# Gestion touche E — seulement dans la zone sombre
+	if dans_zone_sombre:
+		if Input.is_action_just_pressed("interaction"):
+			lampe_activee = !lampe_activee
+			if lampe_activee:
+				light.texture_scale = taille_lampe_boostee
+			else:
+				light.texture_scale = taille_lampe_normale
+
+	# Drain d'énergie
+	if dans_zone_sombre and lampe_activee:
+		energie -= drain_energie_lampe * delta
+
+	# ── Récupère le dash quand on touche le sol ────────────
+	if is_on_floor():
+		peut_dasher = true
+		etat_air = false
+	else:
+		etat_air = true
+
+	# ── Gravité ────────────────────────────────────────────
+	if not is_on_floor():
+		velocity += get_gravity() * GRAVITE_MULT * delta
+
+	# ── Saut ───────────────────────────────────────────────
+	if Input.is_action_just_pressed("sauter") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# ── Lire la direction du joueur ────────────────────────
+	var dir = Vector2(
+		Input.get_axis("Gauche", "Droite"),
+		Input.get_axis("haut",   "Bas")
+	)
+
+	if dir.length() > 0.2:
+		derniere_direction = dir.normalized()
+
+	# ── Déplacement normal (désactivé pendant le dash) ─────
+	var direction := Input.get_axis("ui_left", "ui_right")
+	if not en_dash:
+		if direction:
+			velocity.x = direction * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	# ── Déclenchement du dash ──────────────────────────────
+	if Input.is_action_just_pressed("dash") and peut_dasher:
+		var dash_dir : Vector2
+		if dir.length() > 0.2:
+			if abs(dir.y) > abs(dir.x) * 1.5:
+				dash_dir = Vector2(0, sign(dir.y))
+			elif abs(dir.x) > abs(dir.y) * 1.5:
+				dash_dir = Vector2(sign(dir.x), 0)
+			else:
+				dash_dir = dir.normalized()
+		else:
+			dash_dir = derniere_direction
+
+		direction_dash = dash_dir
+		peut_dasher = false
+		en_dash = true
+		jouer_animation_dash(direction_dash)
+		vitesse_dash = DASH_SPEED
+		velocity.y = 0.0
+
+		var tween = create_tween()
+		tween.tween_property(self, "vitesse_dash", 0.0, 0.25)
+		tween.tween_callback(func(): en_dash = false)
+
+	# ── Applique vélocité dash ─────────────────────────────
+	if en_dash:
+		velocity.x = direction_dash.x * vitesse_dash
+		if abs(direction_dash.y) > 0.3:
+			velocity.y = direction_dash.y * vitesse_dash
+
+	move_and_slide()
+
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider is TileMap:
+			var tile_pos = collider.local_to_map(collision.get_position())
+			var tile_data = collider.get_cell_tile_data(2, tile_pos)
+			if tile_data and tile_data.get_custom_data("mortel"):
+				mourir()
+			var normal = collision.get_normal()
+			if normal.y > 0.5:
+				var pos_haut = collision.get_position() + Vector2(0, -8)
+				var tile_pos_haut = collider.local_to_map(collider.to_local(pos_haut))
+				var tile_data_haut = collider.get_cell_tile_data(2, tile_pos_haut)
+				if tile_data_haut and tile_data_haut.get_custom_data("mortel"):
+					mourir()
+
+	# ── Animations ─────────────────────────────────────────
+	if en_dash:
+		pass
+	elif not is_on_floor():
+		jouer_animation("Saut")
+	elif direction:
+		jouer_animation("Marche")
+	else:
+		jouer_animation("Idle")
+
+# ── ANIMATIONS ─────────────────────────────────────────
+func jouer_animation(nom: String):
+	if $AnimatedSprite2D.animation != nom and Mort == false:
+		$AnimatedSprite2D.play(nom)
+
+func jouer_animation_dash(dir: Vector2):
+	if   dir.x > 0.5  and abs(dir.y) < 0.4:   jouer_animation("Dash_droite")
+	elif dir.x < -0.5 and abs(dir.y) < 0.4:   jouer_animation("Dash_gauche")
+	elif dir.y < -0.5 and abs(dir.x) < 0.4:   jouer_animation("Dash_haut")
+	elif dir.y > 0.5  and abs(dir.x) < 0.4:   jouer_animation("Dash_bas")
+	elif dir.x > 0.3  and dir.y < -0.3:        jouer_animation("Dash_haut_droite")
+	elif dir.x < -0.3 and dir.y < -0.3:        jouer_animation("Dash_haut_gauche")
+	elif dir.x > 0.3  and dir.y > 0.3:         jouer_animation("Dash_bas_droite")
+	elif dir.x < -0.3 and dir.y > 0.3:         jouer_animation("Dash_bas_gauche")
+
+func mourir():
+	Mort = true
+	velocity = Vector2.ZERO
+	light.texture_scale = taille_lampe_normale
+	$AnimatedSprite2D.stop()
+	$AnimatedSprite2D.play("Mort")
+	set_physics_process(false)
+	await get_tree().create_timer(0.7).timeout
+	var spawn = get_tree().get_first_node_in_group("spawn")
+	if spawn:
+		global_position = spawn.global_position
+	set_physics_process(true)
+	energie = 100
+	Mort = false
+
+# ── RECHARGE ───────────────────────────────────────────
+func commencer_recharge():
+	en_recharge = true
+
+func arreter_recharge():
+	en_recharge = false
+
+# ── MENU PAUSE ─────────────────────────────────────────
+func _input(event):
+	if event.is_action_pressed("pause"):
+		if menu_pause.visible:
+			menu_pause.fermer()
+		else:
+			menu_pause.ouvrir()
+		get_viewport().set_input_as_handled()
