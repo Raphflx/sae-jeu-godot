@@ -1,7 +1,7 @@
 extends Node
 
 var niveau_actuel = 1
-var niveau_max    = 3
+var niveau_max    = 4
 
 func niveau_suivant():
 	niveau_actuel += 1
